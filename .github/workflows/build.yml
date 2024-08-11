@@ -38,16 +38,9 @@ jobs:
 
       - name: Build and push
         uses: docker/build-push-action@v6
-        id: push
         with:
           push: true
+          sbom: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
-
-      - name: Generate artifact attestation
-        uses: actions/attest-build-provenance@v1
-        with:
-          subject-name: zapotocnylubos/nextcloud-nginx
-          subject-digest: ${{ steps.push.outputs.digest }}
-          push-to-registry: true
